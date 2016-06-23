@@ -4,6 +4,8 @@ ruby '2.2.4'
 
 gem 'sinatra'
 gem 'pry'
+gem 'puma'
+gem 'dotenv'
 gem 'activesupport', require: 'active_support'
 gem 'sidekiq'
 gem 'everypolitician', github: 'everypolitician/everypolitician-ruby'
