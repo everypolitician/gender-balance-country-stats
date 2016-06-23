@@ -5,6 +5,13 @@ GIT
     everypolitician-popolo (0.3.2)
 
 GIT
+  remote: git://github.com/everypolitician/everypolitician-ruby.git
+  revision: ba9bf4dc5d16005811811db065a202c945f95bc4
+  specs:
+    everypolitician (0.7.0)
+      everypolitician-popolo
+
+GIT
   remote: git://github.com/everypolitician/everypoliticianbot.git
   revision: 736835a753e2f0b88fe51ff186d4831ee5b56797
   specs:
@@ -88,6 +95,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  everypolitician!
   everypolitician-popolo!
   everypoliticianbot!
   pry

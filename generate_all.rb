@@ -1,25 +1,24 @@
 require 'open-uri'
 require 'json'
+require 'everypolitician'
 require 'everypolitician/popolo'
 
-countries = JSON.parse(open('https://raw.githubusercontent.com/everypolitician/everypolitician-data/master/countries.json').read, symbolize_names: true)
-
 gender_stats = []
-countries.each do |c|
+EveryPolitician.countries.each do |c|
   country = {
     :slug => c[:slug],
   }
   legislatures = []
-  c[:legislatures].each do |l|
+  c.legislatures.each do |l|
     legislature = {
-      :slug => l[:slug],
-      :term => l[:term],
+      slug: l.slug,
+      term: l.raw_data[:term],
     }
     stats = {
       :overall => Hash.new(0),
       :parties => {},
     }
-    legislature_data = EveryPolitician::Popolo.parse(open(l[:popolo_url]).read)
+    legislature_data = l.popolo
     legislature_data.organizations.where(classification: "party").each do |o|
       stats[:parties][o.id] = Hash.new(0)
     end
