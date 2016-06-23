@@ -6,7 +6,7 @@ require 'everypolitician/popolo'
 gender_stats = []
 EveryPolitician.countries.each do |c|
   country = {
-    :slug => c[:slug],
+    slug: c.slug,
   }
   legislatures = []
   c.legislatures.each do |l|
@@ -15,8 +15,8 @@ EveryPolitician.countries.each do |c|
       term: l.raw_data[:term],
     }
     stats = {
-      :overall => Hash.new(0),
-      :parties => {},
+      overall: Hash.new(0),
+      parties: {},
     }
     legislature_data = l.popolo
     legislature_data.organizations.where(classification: "party").each do |o|
