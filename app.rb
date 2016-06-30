@@ -19,7 +19,7 @@ end
 class GenderStats
   def self.report
     gender_stats = []
-    EveryPolitician.countries.take(1).each do |c|
+    EveryPolitician.countries.each do |c|
       country = {
         slug: c.slug,
       }
