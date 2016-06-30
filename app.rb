@@ -19,7 +19,7 @@ end
 class GenderStats
   def self.report
     gender_stats = []
-    EveryPolitician.countries.take(1).each do |c|
+    EveryPolitician.countries.each do |c|
       country = {
         slug: c.slug,
       }
@@ -67,13 +67,20 @@ class GenderStats
             term_id = m.document[:legislative_period_id]
             terms[term_id][:overall][gender] += 1
             terms[term_id][:overall][:total] += 1
-            party = m.on_behalf_of_id
-            terms[term_id][:parties][party][:name] = party_id_to_name[party]
+            group_id = m.on_behalf_of_id
+            group = l.popolo.organizations.find { |o| o.id == group_id }
+            wikidata_identifier = ((group[:identifiers] || {}).find { |i| i[:scheme] == 'wikidata' } || {})[:identifier]
+            if wikidata_identifier
+              party = wikidata_identifier
+            else
+              party = group_id
+            end
+            terms[term_id][:parties][party][:name] = party_id_to_name[group_id]
             terms[term_id][:parties][party][gender] += 1
             terms[term_id][:parties][party][:total] += 1
             party_person = party + ':' + p.id
             if not totals_seen[party_person]
-                totals[:parties][party][:name] = party_id_to_name[party]
+                totals[:parties][party][:name] = party_id_to_name[group_id]
                 totals[:parties][party][gender] += 1
                 totals[:parties][party][:total] += 1
                 totals_seen[party_person] = gender
