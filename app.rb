@@ -47,6 +47,11 @@ class GenderStats
           person_memberships[m.person_id].push(m)
         end
 
+        party_id_to_name = {}
+        l.popolo.organizations.where(classification: 'party').each do |p|
+          party_id_to_name[p.id] = p.name
+        end
+
         l.popolo.persons.each do |p|
           gender = p.gender || 'unknown'
           if not totals_seen[p.id]
@@ -63,10 +68,12 @@ class GenderStats
             terms[term_id][:overall][gender] += 1
             terms[term_id][:overall][:total] += 1
             party = m.on_behalf_of_id
+            terms[term_id][:parties][party][:name] = party_id_to_name[party]
             terms[term_id][:parties][party][gender] += 1
             terms[term_id][:parties][party][:total] += 1
             party_person = party + ':' + p.id
             if not totals_seen[party_person]
+                totals[:parties][party][:name] = party_id_to_name[party]
                 totals[:parties][party][gender] += 1
                 totals[:parties][party][:total] += 1
                 totals_seen[party_person] = gender
