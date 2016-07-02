@@ -111,7 +111,7 @@ class GBCountryStatsGenerator
   def perform(countries_json_url)
     Everypolitician.countries_json = countries_json_url
     with_git_repo('everypolitician/gender-balance-country-stats', branch: 'gh-pages', message: 'Update stats.json') do
-      File.write('stats.json', GenderStats.report.to_json)
+      File.write('stats.json', JSON.pretty_generate(GenderStats.report))
     end
   end
 end
