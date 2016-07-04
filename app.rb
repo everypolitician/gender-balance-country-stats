@@ -54,15 +54,8 @@ class GenderStats
 
         l.popolo.persons.each do |p|
           gender = p.gender || 'unknown'
-          if not totals_seen[p.id]
-              totals[:overall][gender] += 1
-              totals[:overall][:total] += 1
-              totals_seen[p.id] = gender
-          elsif totals_seen[p.id] != gender and gender != 'unknown'
-              totals[:overall][gender] += 1
-              totals[:overall][totals_seen[p.id]] -= 1
-              totals_seen[p.id] = gender
-          end
+          totals[:overall][gender] += 1
+          totals[:overall][:total] += 1
           person_memberships[p.id].each do |m|
             term_id = m.document[:legislative_period_id]
             terms[term_id][:overall][gender] += 1
@@ -83,10 +76,6 @@ class GenderStats
                 totals[:parties][party][:name] = party_id_to_name[group_id]
                 totals[:parties][party][gender] += 1
                 totals[:parties][party][:total] += 1
-                totals_seen[party_person] = gender
-            elsif totals_seen[party_person] != gender and gender != 'unknown'
-                totals[:overall][party][gender] += 1
-                totals[:overall][party][totals_seen[party_person]] -= 1
                 totals_seen[party_person] = gender
             end
           end
