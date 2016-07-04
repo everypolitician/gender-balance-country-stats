@@ -15,10 +15,6 @@ hash there is a `legislatures` array which has a `terms` hash with one
 entry for each term we have details for and a `totals` hash which has
 counts across all terms that we have details for.
 
-In these totals if someone is listed in one term as unknown and
-another with a confirmed gender, they will be counted under the
-confirmed gender.
-
 Each of these also contain breakdowns per party. Note that it's possible
 that a person could be counted twice in the party data if they have
 changed party.
